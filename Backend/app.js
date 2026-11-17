@@ -42,6 +42,10 @@ app.use('/api/users',userRoutes)
 app.use('/api/translate',translationRoutes)
 app.use('/api/trips',tripsRoutes)
 require('./config/frontend')(app, express)
+
+app.use(req,res,next=>{
+    res.sendFile(path.join(__dirname, 'public', 'index.html'))
+})
 app.use((req,res,next)=>{
     const error = new HttpError('Route not found',404)
     throw error
