@@ -115,7 +115,7 @@ Use one local configuration file per app: `Backend/.env` and `Frontend/.env`. Th
 | `NODE_ENV` | Production startup sets this to `production`. |
 | `PORT` | HTTP port; defaults to `5000`, or use the port assigned by your host. |
 | `JWT_TTL_SECONDS` | Session lifetime: 120 locally, 3600 in production when not overridden. |
-| `FRONTEND_ORIGINS` | Comma-separated allowed frontend origins for CORS, without trailing slashes. Set your HTTPS origin when deploying. |
+| `FRONTEND_ORIGINS` | Comma-separated allowed frontend origins for CORS, without trailing slashes. For the current Vercel deployment, set this to `https://snap-it-ten.vercel.app`. |
 | `MAP_API_KEY` | LocationIQ key, needed for address-based forward/reverse geocoding. |
 | `GOOGLE_TRANSLATE_API_KEY` | Google Cloud Translation API v2 key; translation returns 503 until configured. |
 | `DATABASE_DNS_SERVERS` | Optional resolver IPs for database DNS troubleshooting; normally empty. |
@@ -141,9 +141,9 @@ npm start
 
 `npm start` runs `Backend/server.cjs` in production mode, serving `Frontend/build` and the API on `PORT`. Put the process behind managed HTTPS or a reverse proxy and provide durable storage for `Backend/uploads/images`.
 
-For separate frontend hosting, set `REACT_APP_BACKEND_URL=https://your-api-domain` in the frontend build environment and publish `Frontend/build`. Configure an SPA fallback to `index.html`. Set `SERVE_FRONTEND=false` on the backend and add the frontend origin to `FRONTEND_ORIGINS`.
+For separate frontend hosting, set `REACT_APP_BACKEND_URL=https://your-api-domain` in the frontend build environment and publish `Frontend/build`. Configure an SPA fallback to `index.html`. Set `SERVE_FRONTEND=false` on the backend and set `FRONTEND_ORIGINS=https://snap-it-ten.vercel.app` in the backend's hosting environment (without a trailing slash).
 
-The repository's `vercel.json` installs the frontend package including its build-time development dependencies, builds from the repository root, publishes `Frontend/build`, and sends client-side routes to the SPA entry point. For Vercel, import the repository with the **Root Directory** set to the repository root; set `REACT_APP_BACKEND_URL` in the Vercel project environment to the deployed API's HTTPS origin. Deploy the API separately and configure its database, JWT, provider, and allowed-origin variables in its hosting environment.
+The repository's `vercel.json` installs the frontend package including its build-time development dependencies, builds from the `Frontend` root directory, publishes `build`, and sends client-side routes to the SPA entry point. For Vercel, set the **Root Directory** to `Frontend` and configure `REACT_APP_BACKEND_URL` in the Vercel project environment with the deployed API's HTTPS origin. Deploy the API separately and configure its database, JWT, provider, and allowed-origin variables in its hosting environment, including `FRONTEND_ORIGINS=https://snap-it-ten.vercel.app`.
 
 ## Health checks and verification
 
