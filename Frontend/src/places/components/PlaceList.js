@@ -85,10 +85,6 @@ const PlaceList = props=>{
      }), [feedItems, selectedItemKey]);
 
      const selectedItem = feedItems.find(item => item.key === selectedItemKey) || null;
-     const selectedDescription = selectedItem?.type === 'trip'
-        ? selectedItem.data.description || selectedItem.data.stops?.map(stop => stop.note).filter(Boolean).join(' ')
-        : selectedItem?.data.description;
-
      useEffect(() => {
         if (!sharedPlaceKey || !(props.items || []).some(place => `place-${place.id || place._id}` === sharedPlaceKey)) return;
         setSearchValue('');
@@ -165,7 +161,6 @@ const PlaceList = props=>{
             contentClass="post-preview-modal__content"
             footerClass="post-preview-modal__footer"
         >
-            {selectedItem?.type === 'trip' && selectedDescription && <p className="post-preview-modal__description">{selectedDescription}</p>}
             {selectedItem?.type === 'trip' ? <TripFeedCard key={selectedItem.key} trip={selectedItem.data} /> : selectedItem && <PlaceItem
                 key={selectedItem.key}
                 id={selectedItem.data.id}
