@@ -3,7 +3,7 @@ Frontend/build/
 **/.env
 **/.env.*
 !**/.env*.example
-Backend/uploads/
+
 **/*.log
 coverage/
 .snapit-*
